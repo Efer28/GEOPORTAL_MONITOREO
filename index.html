@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Geoportal ED - Monitoreo Ambiental</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="navbar">
+<div class="navbar-brand">
+<div class="logo">&#9790;</div>
+<span>Geoportal ED</span>
+</div>
+<div class="navbar-actions">
+<button class="nav-btn nav-btn-report" onclick="abrirModalReporte()">
+  + Nuevo Reporte
+</button>
+<button class="nav-btn nav-btn-config" onclick="toggleConfig()">
+  Configuraci&oacute;n
+</button>
+</div>
+</nav>
+
+<div class="main-container">
+<div class="sidebar">
+<div class="sidebar-card" id="configPanel">
+<h3>Configuraci&oacute;n Supabase</h3>
+<div class="input-group">
+<label>URL del proyecto</label>
+<input id="supabase_url" value="https://qolflqkhrwvvrittqoqh.supabase.co">
+</div>
+<div class="input-group">
+<label>API Key (anon)</label>
+<input id="supabase_key" type="password" value="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFvbGZscWtocnd2dnJpdHRxb3FoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE0ODc5MjAsImV4cCI6MjA5NzA2MzkyMH0.jO-1lQuNvzooPq9K8IcsaGdU1ixPMwVTs30W5zqMMjA">
+</div>
+<div class="input-group">
+<label>Tablas de capas (separadas por comas)</label>
+<input id="tablas" placeholder="ej: Garcia_Moreno,Rios_AOI">
+</div>
+<button class="btn-primary" onclick="cargarCapas()">Cargar Capas</button>
+<div id="estado"></div>
+</div>
+
+<div class="sidebar-card" style="flex:1">
+<h3>Capas activas</h3>
+<div id="listaCapas" style="font-size:13px;color:var(--text-light)">
+  Usa el control de capas en el mapa (esquina superior derecha) para activar/desactivar.
+</div>
+</div>
+
+<div class="sidebar-card">
+<h3>&Uacute;ltimos reportes</h3>
+<div id="ultimosReportes" style="font-size:13px;color:var(--text-light)">Cargando...</div>
+</div>
+</div>
+
+<div class="map-wrapper">
+<div id="map"></div>
+<div id="infoLeyenda" class="info-leyenda"></div>
+</div>
+</div>
+
+<div id="modalReporte" class="modal-overlay">
+<div class="modal">
+<div class="modal-header">
+<h2><span>&#128202;</span> Reporte de campo</h2>
+<button class="modal-close" onclick="cerrarModalReporte()">&times;</button>
+</div>
+<div class="modal-body">
+
+<div class="paso-indicador">
+<div class="paso activo" id="paso1">1. Seleccionar punto</div>
+<div class="paso" id="paso2">2. Ingresar datos</div>
+</div>
+
+<div id="pasoSeleccion">
+<input class="buscador-puntos" id="buscadorPuntos" placeholder="Buscar punto de monitoreo..." oninput="filtrarPuntos()">
+<div class="lista-puntos" id="listaPuntos"></div>
+</div>
+
+<div id="pasoFormulario" style="display:none">
+<div id="puntoSeleccionadoInfo" class="punto-seleccionado-info"></div>
+<div class="form-grid" style="margin-top:16px">
+<div class="form-group">
+<label>Ox&iacute;geno Disuelto (mg/L)</label>
+<input type="number" id="campo_oxigeno" step="0.01" min="0" max="20" placeholder="0.00">
+</div>
+<div class="form-group">
+<label>Temperatura (&deg;C)</label>
+<input type="number" id="campo_temperatura" step="0.1" min="-10" max="50" placeholder="0.0">
+</div>
+<div class="form-group">
+<label>pH</label>
+<input type="number" id="campo_ph" step="0.01" min="0" max="14" placeholder="7.00">
+</div>
+<div class="form-group">
+<label>Conductividad (&micro;S/cm)</label>
+<input type="number" id="campo_conductividad" step="0.1" min="0" placeholder="0.0">
+</div>
+<div class="form-group">
+<label>Fecha</label>
+<input type="date" id="campo_fecha">
+</div>
+<div class="form-group">
+<label>Hora</label>
+<input type="time" id="campo_hora">
+</div>
+<div class="form-group full">
+<label>Observaciones</label>
+<textarea id="campo_observaciones" placeholder="Condiciones del entorno, color del agua, clima, etc."></textarea>
+</div>
+</div>
+<div class="form-actions">
+<button class="btn-cancel" onclick="volverSeleccionPunto()">Atr&aacute;s</button>
+<button class="btn-submit" onclick="guardarReporte()">Guardar Reporte</button>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
