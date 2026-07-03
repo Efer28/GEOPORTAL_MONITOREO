@@ -486,6 +486,15 @@ body{
   box-shadow:0 1px 3px rgba(0,0,0,0.2);
 }
 .switch.activo::after{left:20px}
+.footer{
+  text-align:center;
+  padding:10px 20px;
+  font-size:11px;
+  color:var(--text-light);
+  border-top:1px solid var(--border);
+  background:var(--card);
+  letter-spacing:0.3px;
+}
 @media(max-width:768px){
   .main-container{flex-direction:column;height:auto}
   .sidebar{width:100%;min-width:unset;max-height:300px;border-right:none;border-bottom:1px solid var(--border)}
