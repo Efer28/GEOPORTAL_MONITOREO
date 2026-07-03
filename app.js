@@ -293,5 +293,66 @@ async function cargarReportes(){
   }
 }
 
+async function generarPDF() {
+  try {
+    const datos = await api('reportes_campo?select=*&order=fecha.desc&limit=500');
+    if (!datos || datos.length === 0) {
+      mostrarToast('No hay reportes para generar PDF', 'error');
+      return;
+    }
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
+
+    doc.setFontSize(18);
+    doc.setTextColor(91, 155, 213);
+    doc.text('Geoportal AIC - Reportes de Monitoreo H\u00eddrico', 14, 20);
+
+    doc.setFontSize(9);
+    doc.setTextColor(100, 116, 139);
+    const ahora = new Date();
+    doc.text('Generado: ' + ahora.toLocaleDateString('es-EC') + ' ' + ahora.toLocaleTimeString('es-EC'), 14, 27);
+    doc.text('Total de reportes: ' + datos.length, 14, 32);
+
+    const headers = [['N\u00b0', 'Punto', 'Fecha', 'Hora', 'OD (mg/L)', 'T (\u00b0C)', 'pH', 'Cond (\u00b5S/cm)', 'Observaciones']];
+    const rows = datos.map((r, i) => [
+      i + 1,
+      r.punto_monitoreo_nombre || 'Punto #' + r.punto_monitoreo_gid,
+      r.fecha ? r.fecha.slice(0, 10) : '',
+      r.hora ? r.hora.slice(0, 5) : '',
+      r.oxigeno_disuelto ?? '',
+      r.temperatura ?? '',
+      r.ph ?? '',
+      r.conductividad ?? '',
+      r.observaciones || ''
+    ]);
+
+    doc.autoTable({
+      head: headers,
+      body: rows,
+      startY: 38,
+      styles: { fontSize: 7, font: 'helvetica' },
+      headStyles: { fillColor: [91, 155, 213], textColor: [255, 255, 255], fontStyle: 'bold' },
+      alternateRowStyles: { fillColor: [241, 245, 249] },
+      columnStyles: {
+        0: { cellWidth: 8 },
+        1: { cellWidth: 30 },
+        2: { cellWidth: 18 },
+        3: { cellWidth: 12 },
+        4: { cellWidth: 16 },
+        5: { cellWidth: 14 },
+        6: { cellWidth: 12 },
+        7: { cellWidth: 18 },
+        8: { cellWidth: 40 }
+      }
+    });
+
+    doc.save('reportes_monitoreo_AIC.pdf');
+    mostrarToast('PDF generado con ' + datos.length + ' reportes', 'success');
+  } catch (e) {
+    mostrarToast('Error al generar PDF: ' + e.message, 'error');
+    console.error(e);
+  }
+}
+
 cargarPuntosMonitoreo();
 cargarReportes();

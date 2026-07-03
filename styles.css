@@ -426,6 +426,15 @@ body{
   cursor:pointer;
   transition:var(--transition);
 }
+.btn-pdf{
+  width:100%;padding:9px 16px;margin-top:12px;
+  background:var(--card);color:var(--primary-dark);
+  border:1px solid var(--primary);border-radius:6px;
+  font-family:'Inter',sans-serif;font-weight:600;font-size:12px;
+  cursor:pointer;transition:var(--transition);
+  display:flex;align-items:center;justify-content:center;gap:6px;
+}
+.btn-pdf:hover{background:#eff6ff}
 .btn-submit:hover{
   background:var(--primary-dark);
   box-shadow:0 2px 10px rgba(91,155,213,0.35);
