@@ -1,7 +1,7 @@
 :root{
-  --primary:#0a6e5e;
-  --primary-dark:#064a3f;
-  --primary-light:#0d8f7a;
+  --primary:#5b9bd5;
+  --primary-dark:#3a7bc8;
+  --primary-light:#7bb3e0;
   --accent:#f59e0b;
   --bg:#f0f4f8;
   --card:#fff;
@@ -38,7 +38,7 @@ body{
   display:flex;
   align-items:center;
   gap:12px;
-  color:#fff;
+  color:#1a202c;
   font-weight:800;
   font-size:20px;
   letter-spacing:-0.5px;
@@ -46,7 +46,7 @@ body{
 .navbar-brand .logo{
   width:36px;
   height:36px;
-  background:rgba(255,255,255,0.2);
+  background:rgba(26,32,44,0.1);
   border-radius:10px;
   display:flex;
   align-items:center;
@@ -414,6 +414,25 @@ body{
   border-bottom:1px solid #e2e8f0;
 }
 .capa-switch:last-child{border-bottom:none}
+.leyenda-item{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:8px 0;
+  border-bottom:1px solid #e2e8f0;
+  font-size:13px;
+}
+.leyenda-item:last-child{border-bottom:none}
+.leyenda-marcador{
+  width:14px;
+  height:14px;
+  border-radius:50%;
+  flex-shrink:0;
+  border:2px solid;
+}
+.leyenda-marcador.azul{background:#5b9bd5;border-color:#3a7bc8}
+.leyenda-marcador.ambar{background:#f59e0b;border-color:#d97706}
+.leyenda-marcador.linea{background:none;border:2px dashed #718096;border-radius:0;width:20px;height:0}
 .capa-switch-info{flex:1;min-width:0}
 .capa-switch-nombre{
   font-size:13px;
