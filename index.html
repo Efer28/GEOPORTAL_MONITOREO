@@ -19,36 +19,36 @@
 <button class="nav-btn nav-btn-report" onclick="abrirModalReporte()">
   + Nuevo Reporte
 </button>
-<button class="nav-btn nav-btn-config" onclick="toggleConfig()">
-  Configuraci&oacute;n
-</button>
 </div>
 </nav>
 
 <div class="main-container">
 <div class="sidebar">
-<div class="sidebar-card" id="configPanel">
-<h3>Configuraci&oacute;n Supabase</h3>
-<div class="input-group">
-<label>URL del proyecto</label>
-<input id="supabase_url" value="https://qolflqkhrwvvrittqoqh.supabase.co">
-</div>
-<div class="input-group">
-<label>API Key (anon)</label>
-<input id="supabase_key" type="password" value="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFvbGZscWtocnd2dnJpdHRxb3FoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE0ODc5MjAsImV4cCI6MjA5NzA2MzkyMH0.jO-1lQuNvzooPq9K8IcsaGdU1ixPMwVTs30W5zqMMjA">
-</div>
-<div class="input-group">
-<label>Tablas de capas (separadas por comas)</label>
-<input id="tablas" placeholder="ej: Garcia_Moreno,Rios_AOI">
-</div>
-<button class="btn-primary" onclick="cargarCapas()">Cargar Capas</button>
-<div id="estado"></div>
-</div>
 
 <div class="sidebar-card" style="flex:1">
-<h3>Capas activas</h3>
-<div id="listaCapas" style="font-size:13px;color:var(--text-light)">
-  Usa el control de capas en el mapa (esquina superior derecha) para activar/desactivar.
+<h3>Capas</h3>
+<div id="listaCapas">
+<div class="capa-switch">
+<div class="capa-switch-info">
+<div class="capa-switch-nombre">Puntos monitoreo</div>
+<div class="capa-switch-desc">p_monitoreo</div>
+</div>
+<div class="switch activo" id="switch_puntos" onclick="toggleCapa('Puntos monitoreo', this)"></div>
+</div>
+<div class="capa-switch">
+<div class="capa-switch-info">
+<div class="capa-switch-nombre">Reportes de campo</div>
+<div class="capa-switch-desc">Reportes guardados</div>
+</div>
+<div class="switch activo" id="switch_reportes" onclick="toggleCapa('Reportes de campo', this)"></div>
+</div>
+<div class="capa-switch">
+<div class="capa-switch-info">
+<div class="capa-switch-nombre">Etiquetas</div>
+<div class="capa-switch-desc">Nombres y l&iacute;mites</div>
+</div>
+<div class="switch activo" id="switch_etiquetas" onclick="toggleCapa('Etiquetas', this)"></div>
+</div>
 </div>
 </div>
 
@@ -60,7 +60,6 @@
 
 <div class="map-wrapper">
 <div id="map"></div>
-<div id="infoLeyenda" class="info-leyenda"></div>
 </div>
 </div>
 
