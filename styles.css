@@ -406,6 +406,49 @@ body{
 .toast.success{background:#166534;color:#fff}
 .toast.error{background:#991b1b;color:#fff}
 .toast.visible{display:block}
+.capa-switch{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:10px 0;
+  border-bottom:1px solid #e2e8f0;
+}
+.capa-switch:last-child{border-bottom:none}
+.capa-switch-info{flex:1;min-width:0}
+.capa-switch-nombre{
+  font-size:13px;
+  font-weight:600;
+  color:var(--text);
+}
+.capa-switch-desc{
+  font-size:11px;
+  color:var(--text-light);
+  margin-top:1px;
+}
+.switch{
+  width:40px;
+  height:22px;
+  background:#cbd5e1;
+  border-radius:11px;
+  position:relative;
+  cursor:pointer;
+  flex-shrink:0;
+  transition:var(--transition);
+}
+.switch.activo{background:var(--primary)}
+.switch::after{
+  content:'';
+  width:18px;
+  height:18px;
+  background:#fff;
+  border-radius:50%;
+  position:absolute;
+  top:2px;
+  left:2px;
+  transition:var(--transition);
+  box-shadow:0 1px 3px rgba(0,0,0,0.2);
+}
+.switch.activo::after{left:20px}
 @media(max-width:768px){
   .main-container{flex-direction:column;height:auto}
   .sidebar{width:100%;min-width:unset;max-height:300px;border-right:none;border-bottom:1px solid #e2e8f0}
