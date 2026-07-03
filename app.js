@@ -14,6 +14,7 @@ sat.addTo(map);
 labels.addTo(map);
 
 let controlCapas = L.control.layers(baseMaps, null, {collapsed: false, position: 'topright'}).addTo(map);
+actualizarLeyenda();
 
 function toggleCapa(nombre, el) {
   const grupo = overlays[nombre];
@@ -25,6 +26,25 @@ function toggleCapa(nombre, el) {
     map.addLayer(grupo);
     el.classList.add('activo');
   }
+  actualizarLeyenda();
+}
+
+function actualizarLeyenda() {
+  const div = document.getElementById('leyendaMapa');
+  const items = [];
+  if (map.hasLayer(overlays["Puntos monitoreo"]))
+    items.push('<div class="ley-item"><div class="ley-marca azul"></div>Puntos monitoreo</div>');
+  if (map.hasLayer(overlays["Reportes de campo"]))
+    items.push('<div class="ley-item"><div class="ley-marca ambar"></div>Reportes de campo</div>');
+  if (map.hasLayer(overlays["Etiquetas"]))
+    items.push('<div class="ley-item"><div class="ley-marca linea"></div>Etiquetas</div>');
+
+  if (items.length === 0) {
+    div.classList.remove('visible');
+    return;
+  }
+  div.innerHTML = '<h4>Capas activas</h4>' + items.join('');
+  div.classList.add('visible');
 }
 
 let puntosMonitoreo = [];

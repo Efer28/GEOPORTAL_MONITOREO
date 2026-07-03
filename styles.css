@@ -157,11 +157,24 @@ body{
 #map{width:100%;height:100%}
 .info-leyenda{
   position:absolute;bottom:24px;right:24px;z-index:1000;
-  background:var(--card);padding:12px 16px;
+  background:var(--card);padding:10px 14px;
   border-radius:var(--radius-sm);box-shadow:var(--shadow);
-  font-size:12px;font-weight:500;color:var(--text-light);display:none;
+  font-size:12px;color:var(--text);display:none;min-width:150px;
 }
 .info-leyenda.visible{display:block}
+.info-leyenda h4{
+  font-size:11px;font-weight:700;text-transform:uppercase;
+  letter-spacing:0.5px;color:var(--text-light);margin-bottom:6px;
+}
+.info-leyenda .ley-item{
+  display:flex;align-items:center;gap:8px;padding:3px 0;
+}
+.info-leyenda .ley-marca{
+  width:12px;height:12px;border-radius:50%;flex-shrink:0;border:2px solid;
+}
+.info-leyenda .ley-marca.azul{background:#0a6e5e;border-color:#064a3f}
+.info-leyenda .ley-marca.ambar{background:#f59e0b;border-color:#d97706}
+.info-leyenda .ley-marca.linea{background:none;border:2px dashed #718096;border-radius:0;width:18px;height:0}
 .modal-overlay{
   position:fixed;inset:0;
   background:rgba(0,0,0,0.5);
@@ -414,25 +427,7 @@ body{
   border-bottom:1px solid #e2e8f0;
 }
 .capa-switch:last-child{border-bottom:none}
-.leyenda-item{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding:8px 0;
-  border-bottom:1px solid #e2e8f0;
-  font-size:13px;
-}
-.leyenda-item:last-child{border-bottom:none}
-.leyenda-marcador{
-  width:14px;
-  height:14px;
-  border-radius:50%;
-  flex-shrink:0;
-  border:2px solid;
-}
-.leyenda-marcador.azul{background:#5b9bd5;border-color:#3a7bc8}
-.leyenda-marcador.ambar{background:#f59e0b;border-color:#d97706}
-.leyenda-marcador.linea{background:none;border:2px dashed #718096;border-radius:0;width:20px;height:0}
+
 .capa-switch-info{flex:1;min-width:0}
 .capa-switch-nombre{
   font-size:13px;
