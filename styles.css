@@ -172,9 +172,18 @@ body{
 .info-leyenda .ley-marca{
   width:12px;height:12px;border-radius:50%;flex-shrink:0;border:2px solid;
 }
-.info-leyenda .ley-marca.azul{background:#0a6e5e;border-color:#064a3f}
+.info-leyenda .ley-marca.azul{background:#b3e0ff;border-color:#5b9bd5}
 .info-leyenda .ley-marca.ambar{background:#f59e0b;border-color:#d97706}
 .info-leyenda .ley-marca.linea{background:none;border:2px dashed #718096;border-radius:0;width:18px;height:0}
+
+.marcador-monitoreo{
+  filter: drop-shadow(0 2px 6px rgba(91,155,213,0.5));
+  transition: all 0.2s ease;
+}
+.marcador-monitoreo:hover{
+  filter: drop-shadow(0 4px 12px rgba(91,155,213,0.8));
+  stroke-width: 4 !important;
+}
 .modal-overlay{
   position:fixed;inset:0;
   background:rgba(0,0,0,0.5);

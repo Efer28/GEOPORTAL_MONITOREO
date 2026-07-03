@@ -98,8 +98,8 @@ async function cargarPuntosMonitoreo(){
     L.geoJSON({type:'FeatureCollection', features}, {
       pointToLayer: function(f, ll){
         return L.circleMarker(ll, {
-          radius: 7, fillColor: '#0a6e5e', color: '#064a3f',
-          weight: 2, fillOpacity: 0.8
+          radius: 9, fillColor: '#b3e0ff', color: '#5b9bd5',
+          weight: 3, fillOpacity: 0.85, className: 'marcador-monitoreo'
         });
       },
       onEachFeature: function(f, layer){
