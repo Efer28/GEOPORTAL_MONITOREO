@@ -5,9 +5,10 @@ const map = L.map('map', {zoomControl: true}).setView([-1.5, -78.5], 7);
 
 const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; OpenStreetMap', maxZoom: 19});
 const sat = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {attribution: '&copy; ESRI', maxZoom: 19});
+const ghyb = L.tileLayer('https://mt{s}.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', {attribution: 'Google', maxZoom: 20, subdomains: ['0','1','2','3']});
 const labels = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', {attribution: '&copy; ESRI', maxZoom: 19});
 
-const baseMaps = { "OpenStreetMap": osm, "Sat\u00e9lite (ESRI)": sat };
+const baseMaps = { "OpenStreetMap": osm, "Sat\u00e9lite (ESRI)": sat, "Google Hybrid": ghyb };
 const overlays = { "Etiquetas": labels, "Puntos monitoreo": L.featureGroup().addTo(map), "Reportes de campo": L.featureGroup().addTo(map) };
 
 sat.addTo(map);
