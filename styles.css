@@ -24,14 +24,14 @@ body{
   flex-direction:column;
 }
 .navbar{
-  background:var(--primary);
+  background:#EEC933;
   padding:0 32px;
   height:64px;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  box-shadow:0 1px 0 rgba(0,0,0,0.08);
-  border-bottom:3px solid var(--primary-dark);
+  box-shadow:0 1px 0 rgba(0,0,0,0.06);
+  border-bottom:3px solid #d4a800;
   position:sticky;
   top:0;
   z-index:2000;
@@ -40,18 +40,19 @@ body{
   display:flex;
   align-items:center;
   gap:14px;
-  color:#fff;
+  color:#1a202c;
 }
 .navbar-brand .logo{
   width:34px;
   height:34px;
-  background:rgba(255,255,255,0.2);
+  background:rgba(26,32,44,0.08);
   border-radius:8px;
   display:flex;
   align-items:center;
   justify-content:center;
   font-size:16px;
   font-weight:700;
+  color:#697A95;
 }
 .navbar-titulo{
   font-weight:700;
@@ -59,11 +60,15 @@ body{
   letter-spacing:-0.3px;
   line-height:1.2;
 }
+.navbar-titulo .aic-dest{
+  color:#697A95;
+}
 .navbar-sub{
   font-size:11px;
   font-weight:400;
-  opacity:0.8;
+  opacity:0.7;
   letter-spacing:0.2px;
+  color:#1a202c;
 }
 .navbar-actions{display:flex;gap:10px}
 .nav-btn{
@@ -80,12 +85,12 @@ body{
   transition:var(--transition);
 }
 .nav-btn-report{
-  background:#fff;
-  color:var(--primary-dark);
+  background:#697A95;
+  color:#fff;
 }
 .nav-btn-report:hover{
-  background:#f1f5f9;
-  box-shadow:0 2px 8px rgba(0,0,0,0.1);
+  background:#5a6b84;
+  box-shadow:0 2px 8px rgba(105,122,149,0.35);
 }
 .main-container{
   display:flex;
