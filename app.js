@@ -9,7 +9,7 @@ const ghyb = L.tileLayer('https://mt{s}.google.com/vt/lyrs=y&x={x}&y={y}&z={z}',
 const labels = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', {attribution: '&copy; ESRI', maxZoom: 19});
 
 const baseMaps = { "OpenStreetMap": osm, "Sat\u00e9lite (ESRI)": sat, "Google Hybrid": ghyb };
-const overlays = { "Etiquetas": labels, "Puntos monitoreo": L.featureGroup().addTo(map), "Reportes de campo": L.featureGroup().addTo(map) };
+const overlays = { "Puntos monitoreo": L.featureGroup().addTo(map), "Reportes de campo": L.featureGroup().addTo(map) };
 
 sat.addTo(map);
 labels.addTo(map);
@@ -37,8 +37,6 @@ function actualizarLeyenda() {
     items.push('<div class="ley-item"><div class="ley-marca azul"></div>Puntos monitoreo</div>');
   if (map.hasLayer(overlays["Reportes de campo"]))
     items.push('<div class="ley-item"><div class="ley-marca ambar"></div>Reportes de campo</div>');
-  if (map.hasLayer(overlays["Etiquetas"]))
-    items.push('<div class="ley-item"><div class="ley-marca linea"></div>Etiquetas</div>');
 
   if (items.length === 0) {
     div.classList.remove('visible');
