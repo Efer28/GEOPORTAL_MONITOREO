@@ -66,12 +66,15 @@ async function api(path, options = {}) {
     Authorization: 'Bearer ' + SUPABASE_KEY,
     'Content-Type': 'application/json'
   };
+  const opts = { headers, credentials: 'omit' };
   if (options.method && options.method !== 'GET') {
-    const res = await fetch(url, { method: options.method, headers, body: JSON.stringify(options.body) });
+    opts.method = options.method;
+    opts.body = JSON.stringify(options.body);
+    const res = await fetch(url, opts);
     if (!res.ok) throw new Error('Error: ' + res.status);
     try { return await res.json() } catch { return null }
   } else {
-    const res = await fetch(url, { headers });
+    const res = await fetch(url, opts);
     if (!res.ok) throw new Error('Error: ' + res.status);
     return await res.json();
   }
