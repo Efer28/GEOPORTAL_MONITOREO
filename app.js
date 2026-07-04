@@ -103,12 +103,16 @@ async function cargarPuntosMonitoreo(){
       };
     }).filter(f => f.geometry);
 
+    function iconoPuntoRuta(){
+      return L.divIcon({
+        className: 'icono-ruta',
+        html: '<svg viewBox="0 0 24 36" width="20" height="32" style="display:block"><path d="M12 1C5.9 1 1 5.9 1 12c0 6.5 5 11 11 19 6-8 11-12.5 11-19C23 5.9 18.1 1 12 1z" fill="#b3e0ff" stroke="#5b9bd5" stroke-width="1.8"/><circle cx="12" cy="10.5" r="3.5" fill="#5b9bd5"/></svg>',
+        iconSize: [20, 32], iconAnchor: [10, 32], popupAnchor: [0, -30]
+      });
+    }
     L.geoJSON({type:'FeatureCollection', features}, {
       pointToLayer: function(f, ll){
-        return L.circleMarker(ll, {
-          radius: 9, fillColor: '#b3e0ff', color: '#5b9bd5',
-          weight: 3, fillOpacity: 0.85, className: 'marcador-monitoreo'
-        });
+        return L.marker(ll, { icon: iconoPuntoRuta() });
       },
       onEachFeature: function(f, layer){
         const p = f.properties;
