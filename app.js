@@ -9,7 +9,7 @@ const ghyb = L.tileLayer('https://mt{s}.google.com/vt/lyrs=y&x={x}&y={y}&z={z}',
 const labels = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', {attribution: '&copy; ESRI', maxZoom: 19});
 
 const baseMaps = { "OpenStreetMap": osm, "Sat\u00e9lite (ESRI)": sat, "Google Hybrid": ghyb };
-const overlays = { "Puntos monitoreo": L.featureGroup().addTo(map), "Reportes de campo": L.featureGroup().addTo(map) };
+const overlays = { "Puntos monitoreo": L.featureGroup().addTo(map), "Reportes de campo": L.featureGroup().addTo(map), "Garc\u00eda Moreno": L.featureGroup().addTo(map) };
 
 sat.addTo(map);
 labels.addTo(map);
@@ -37,6 +37,8 @@ function actualizarLeyenda() {
     items.push('<div class="ley-item"><div class="ley-marca azul"></div>Puntos monitoreo</div>');
   if (map.hasLayer(overlays["Reportes de campo"]))
     items.push('<div class="ley-item"><div class="ley-marca ambar"></div>Reportes de campo</div>');
+  if (map.hasLayer(overlays["Garc\u00eda Moreno"]))
+    items.push('<div class="ley-item"><div class="ley-marca verde"></div>Garc\u00eda Moreno</div>');
 
   if (items.length === 0) {
     div.classList.remove('visible');
@@ -354,5 +356,36 @@ async function generarPDF() {
   }
 }
 
+async function cargarGarciaMoreno(){
+  try {
+    const datos = await api('Garcia_Moreno?select=id,geom,DPA_DESPAR,DPA_DESCAN,DPA_DESPRO&limit=500');
+    const grupo = overlays["Garc\u00eda Moreno"];
+    grupo.clearLayers();
+    if(datos.length === 0) return;
+
+    const features = datos.map(p => {
+      if(!p.geom) return null;
+      return { type: 'Feature', properties: p, geometry: p.geom };
+    }).filter(f => f);
+
+    L.geoJSON({type:'FeatureCollection', features}, {
+      style: { fillColor: '#a7f3d0', color: '#059669', weight: 2, fillOpacity: 0.25 },
+      onEachFeature: function(f, layer){
+        const p = f.properties;
+        layer.bindPopup(
+          '<b>Garc\u00eda Moreno</b><br>' +
+          'Parroquia: ' + (p.DPA_DESPAR || 'N/D') + '<br>' +
+          'Cant\u00f3n: ' + (p.DPA_DESCAN || 'N/D') + '<br>' +
+          'Provincia: ' + (p.DPA_DESPRO || 'N/D')
+        );
+      }
+    }).addTo(grupo);
+
+    if(!document.querySelector('.switch[onclick*="Garc\\u00eda"]')?.classList.contains('activo'))
+      map.removeLayer(grupo);
+  } catch(e){ console.error('Error al cargar Garcia_Moreno:', e) }
+}
+
 cargarPuntosMonitoreo();
+cargarGarciaMoreno();
 cargarReportes();
