@@ -43,7 +43,7 @@ function actualizarLeyenda() {
   if (map.hasLayer(overlays["Reportes de campo"]))
     items.push('<div class="ley-item"><div class="ley-marca ambar"></div>Reportes de campo</div>');
   if (map.hasLayer(overlays["Garc\u00eda Moreno"]))
-    items.push('<div class="ley-item"><div class="ley-marca verde"></div>Garc\u00eda Moreno</div>');
+    items.push('<div class="ley-item"><div class="ley-marca poligono"></div>Garc\u00eda Moreno</div>');
 
   if (items.length === 0) {
     div.classList.remove('visible');
@@ -377,7 +377,7 @@ async function cargarGarciaMoreno(){
     }).filter(f => f);
 
     L.geoJSON({type:'FeatureCollection', features}, {
-      style: { fillColor: '#a7f3d0', color: '#059669', weight: 2, fillOpacity: 0.25 },
+      style: { fillColor: '#22d3ee', color: '#06b6d4', weight: 2.5, fillOpacity: 0.12 },
       onEachFeature: function(f, layer){
         const p = f.properties;
         layer.bindPopup(
