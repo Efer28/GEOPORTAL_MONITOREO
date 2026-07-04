@@ -26,6 +26,9 @@ function toggleCapa(nombre, el) {
   } else {
     map.addLayer(grupo);
     el.classList.add('activo');
+    setTimeout(() => {
+      try { const b = grupo.getBounds(); if (b.isValid()) map.fitBounds(b.pad(0.1)); } catch(e) {}
+    }, 350);
   }
   actualizarLeyenda();
 }
