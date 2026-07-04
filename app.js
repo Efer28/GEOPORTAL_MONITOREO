@@ -15,6 +15,7 @@ sat.addTo(map);
 labels.addTo(map);
 
 let controlCapas = L.control.layers(baseMaps, null, {collapsed: false, position: 'topright'}).addTo(map);
+map.on('baselayerchange', function(e){ if(e.layer) e.layer.bringToBack(); });
 actualizarLeyenda();
 
 function toggleCapa(nombre, el) {
@@ -25,6 +26,7 @@ function toggleCapa(nombre, el) {
     el.classList.remove('activo');
   } else {
     map.addLayer(grupo);
+    grupo.bringToFront();
     el.classList.add('activo');
     setTimeout(() => {
       try { const b = grupo.getBounds(); if (b.isValid()) map.fitBounds(b.pad(0.1)); } catch(e) {}
