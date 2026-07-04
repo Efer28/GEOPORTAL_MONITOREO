@@ -377,7 +377,7 @@ async function cargarGarciaMoreno(){
     }).filter(f => f);
 
     L.geoJSON({type:'FeatureCollection', features}, {
-      style: { fillColor: '#22d3ee', color: '#06b6d4', weight: 2.5, fillOpacity: 0.12 },
+      style: { fillColor: '#ff6347', color: '#dc2626', weight: 2.5, fillOpacity: 0.4 },
       onEachFeature: function(f, layer){
         const p = f.properties;
         layer.bindPopup(
