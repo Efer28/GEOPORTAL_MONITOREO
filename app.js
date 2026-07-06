@@ -116,6 +116,7 @@ async function cargarPuntosMonitoreo(){
       },
       onEachFeature: function(f, layer){
         const p = f.properties;
+        layer.bindTooltip(p.name || 'Punto #' + p.gid, { direction: 'top', offset: [0, -34], className: 'tooltip-monitoreo' });
         layer.bindPopup('<b>' + p.name + '</b><br>Elev: ' + (p.elevation ? p.elevation.toFixed(1) + ' m' : 'N/D') + '<br>' + p.date_obs + ' ' + p.time_obs);
         layer.on('click', function(){ abrirModalReporteConPunto(p); });
       }
