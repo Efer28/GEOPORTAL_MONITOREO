@@ -43,13 +43,9 @@ body{
   color:#1a202c;
 }
 .navbar-brand .logo{
-  height:36px;
-  background:none;
-  border-radius:8px;
   display:flex;
   align-items:center;
-  gap:3px;
-  padding:0 2px;
+  gap:4px;
 }
 .navbar-titulo{
   font-weight:700;
