@@ -9,8 +9,14 @@ const ghyb = L.tileLayer('https://mt{s}.google.com/vt/lyrs=y&x={x}&y={y}&z={z}',
 const labels = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', {attribution: '&copy; ESRI', maxZoom: 19});
 
 const baseMaps = { "OpenStreetMap": osm, "Sat\u00e9lite (ESRI)": sat, "Google Hybrid": ghyb };
+proj4.defs('EPSG:32617','+proj=utm +zone=17 +datum=WGS84 +units=m +no_defs');
+const rasterExtent32617 = [743195.22576757, 27267.52784339, 745971.38114289, 31912.07438118];
+const swLL = proj4('EPSG:32617','EPSG:4326',[rasterExtent32617[0], rasterExtent32617[1]]);
+const neLL = proj4('EPSG:32617','EPSG:4326',[rasterExtent32617[2], rasterExtent32617[3]]);
+const rasterBounds = L.latLngBounds([swLL[1], swLL[0]], [neLL[1], neLL[0]]);
+
 const rasterWMS = L.tileLayer.wms('http://localhost:8080/geoserver/GEOPORTAL_SIG/wms', {
-  layers: 'AIC_WGS84', version: '1.3.0', format: 'image/png', transparent: true,
+  layers: 'AIC_WGS84', version: '1.3.0', format: 'image/png', transparent: false,
   attribution: 'GeoServer'
 });
 const overlays = { "Puntos monitoreo": L.featureGroup().addTo(map), "Reportes de campo": L.featureGroup().addTo(map), "Garc\u00eda Moreno": L.featureGroup().addTo(map), "AIC_WGS84": rasterWMS };
@@ -49,7 +55,6 @@ function toggleCapaRaster(nombre, el) {
     map.addLayer(grupo);
     grupo.bringToFront();
     el.classList.add('activo');
-    const rasterBounds = L.latLngBounds(L.latLng(-0.48, -77.82), L.latLng(-0.38, -77.68));
     map.fitBounds(rasterBounds.pad(0.1));
   }
   actualizarLeyenda();
