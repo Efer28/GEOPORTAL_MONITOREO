@@ -16,7 +16,7 @@ const neLL = proj4('EPSG:32617','EPSG:4326',[rasterExtent32617[2], rasterExtent3
 const rasterBounds = L.latLngBounds([swLL[1], swLL[0]], [neLL[1], neLL[0]]);
 
 const rasterWMS = L.tileLayer.wms('http://localhost:8080/geoserver/GEOPORTAL_SIG/wms', {
-  layers: 'AIC_WGS84', version: '1.3.0', format: 'image/png', transparent: false,
+  layers: 'AIC_WGS84', version: '1.3.0', format: 'image/png', transparent: true, opacity: 0.7,
   attribution: 'GeoServer'
 });
 const overlays = { "Puntos monitoreo": L.featureGroup().addTo(map), "Reportes de campo": L.featureGroup().addTo(map), "Garc\u00eda Moreno": L.featureGroup().addTo(map), "AIC_WGS84": rasterWMS };
