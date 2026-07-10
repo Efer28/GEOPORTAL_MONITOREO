@@ -9,7 +9,11 @@ const ghyb = L.tileLayer('https://mt{s}.google.com/vt/lyrs=y&x={x}&y={y}&z={z}',
 const labels = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', {attribution: '&copy; ESRI', maxZoom: 19});
 
 const baseMaps = { "OpenStreetMap": osm, "Sat\u00e9lite (ESRI)": sat, "Google Hybrid": ghyb };
-const overlays = { "Puntos monitoreo": L.featureGroup().addTo(map), "Reportes de campo": L.featureGroup().addTo(map), "Garc\u00eda Moreno": L.featureGroup().addTo(map) };
+const rasterWMS = L.tileLayer.wms('http://localhost:8080/geoserver/GEOPORTAL_SIG/wms', {
+  layers: 'AIC_WGS84', version: '1.3.0', format: 'image/png', transparent: true,
+  attribution: 'GeoServer'
+});
+const overlays = { "Puntos monitoreo": L.featureGroup().addTo(map), "Reportes de campo": L.featureGroup().addTo(map), "Garc\u00eda Moreno": L.featureGroup().addTo(map), "AIC_WGS84": rasterWMS };
 
 sat.addTo(map);
 labels.addTo(map);
@@ -29,8 +33,24 @@ function toggleCapa(nombre, el) {
     grupo.bringToFront();
     el.classList.add('activo');
     setTimeout(() => {
-      try { const b = grupo.getBounds(); if (b.isValid()) map.fitBounds(b.pad(0.1)); } catch(e) {}
+      try { const b = grupo.getBounds(); if (b.isValid() && !b.getNorthWest().equals(b.getSouthEast())) map.fitBounds(b.pad(0.1)); } catch(e) {}
     }, 350);
+  }
+  actualizarLeyenda();
+}
+
+function toggleCapaRaster(nombre, el) {
+  const grupo = overlays[nombre];
+  if (!grupo) return;
+  if (map.hasLayer(grupo)) {
+    map.removeLayer(grupo);
+    el.classList.remove('activo');
+  } else {
+    map.addLayer(grupo);
+    grupo.bringToFront();
+    el.classList.add('activo');
+    const rasterBounds = L.latLngBounds(L.latLng(-0.48, -77.82), L.latLng(-0.38, -77.68));
+    map.fitBounds(rasterBounds.pad(0.1));
   }
   actualizarLeyenda();
 }
@@ -44,6 +64,8 @@ function actualizarLeyenda() {
     items.push('<div class="ley-item"><div class="ley-marca ambar"></div>Reportes de campo</div>');
   if (map.hasLayer(overlays["Garc\u00eda Moreno"]))
     items.push('<div class="ley-item"><div class="ley-marca poligono"></div>Garc\u00eda Moreno</div>');
+  if (map.hasLayer(overlays["AIC_WGS84"]))
+    items.push('<div class="ley-item"><div class="ley-marca raster"></div>AIC_WGS84</div>');
 
   if (items.length === 0) {
     div.classList.remove('visible');
