@@ -19,7 +19,7 @@ sat.addTo(map);
 labels.addTo(map);
 
 let controlCapas = L.control.layers(baseMaps, null, {collapsed: false, position: 'topright'}).addTo(map);
-map.on('baselayerchange', function(e){ if(e.layer) e.layer.bringToBack(); });
+map.on('baselayerchange', function(e){ if(e.layer) e.layer.bringToBack(); if(map.hasLayer(rasterWMS)) rasterWMS.bringToFront(); });
 actualizarLeyenda();
 
 function toggleCapa(nombre, el) {
